@@ -15,7 +15,7 @@ import java.net.URL;
 
 @Controller
 public class SummonerController {
-    final static String API_KEY = "RGAPI-a9761a00-248f-4204-9d8f-91c09f879608";
+    final static String API_KEY = "";
 
     @RequestMapping(value="/search", method=RequestMethod.GET)
     public String searchSummoner(Model model, HttpServletRequest httpServletRequest) {
