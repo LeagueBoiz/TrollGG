@@ -20,7 +20,7 @@ public class ControllerSum {
     final static String API_KEY = "";
    @PostMapping("/sum/{sumName}")
     public void SumId(@PathVariable String sumName){
-        SumDto sumDto;
+        SearchBySumDto searchBySumDto;
        String serverUrl = "https://kr.api.riotgames.com";
 
        try {
@@ -31,12 +31,12 @@ public class ControllerSum {
            HttpResponse response = client.execute(request);
 
            if(response.getStatusLine().getStatusCode() != 200){
+               System.out.println("api에서 값을 구할수없습니다");
            }
-
            HttpEntity entity = response.getEntity();
-           sumDto = objectMapper.readValue(entity.getContent(), SumDto.class);
-           System.out.println(sumDto.getName());
-           System.out.println(sumDto.getSummonerLevel());
+           searchBySumDto = objectMapper.readValue(entity.getContent(), SearchBySumDto.class);
+           System.out.println(searchBySumDto.getName());
+           System.out.println(searchBySumDto.getSummonerLevel());
        } catch (IOException e){
            e.printStackTrace();
        }
