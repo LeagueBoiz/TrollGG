@@ -1,0 +1,76 @@
+spring:
+  profiles:
+    active:
+    default: local
+
+riot:
+  api:
+    key:
+
+server:
+  port: 8080
+---
+
+spring:
+  profiles:
+    group:
+      "local":
+        -local-db
+        -common
+      "dev":
+        -dev
+        -local-db
+      "prod":
+        -prod
+        -local-db
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "local-db"
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:trollGG?serverTimezone=Asia/Seoul
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8081
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+server:
+  port: 8083
+
+
+
+
