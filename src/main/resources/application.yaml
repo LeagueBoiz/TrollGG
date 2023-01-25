@@ -5,7 +5,7 @@ spring:
 
 riot:
   api:
-    key: ##riot key 입력
+    key: "RGAPI-902bacf0-153f-464a-9be4-23c734dd9dfa"
 
 server:
   port: 8080

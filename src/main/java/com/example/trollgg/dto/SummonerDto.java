@@ -5,9 +5,9 @@ public record SummonerDto(
 	String accountId,
 	String puuid,
 	String name,
-	String profileIconId,
-	String revisionDate,
-	String summonerLevel
+	int profileIconId,
+	long revisionDate,
+	long summonerLevel
 
 ) {
 }
