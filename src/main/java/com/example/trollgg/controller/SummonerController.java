@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.trollgg.dto.SummonerDto;
-import com.example.trollgg.service.facade.RiotApiFacade;
+import com.example.trollgg.facade.RiotApiFacade;
 
 import lombok.RequiredArgsConstructor;
 

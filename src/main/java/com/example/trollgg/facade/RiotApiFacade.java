@@ -1,6 +1,6 @@
-package com.example.trollgg.service.facade;
+package com.example.trollgg.facade;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.example.trollgg.dto.SummonerDto;
 import com.example.trollgg.service.SummonerService;
@@ -8,7 +8,7 @@ import com.example.trollgg.service.SummonerService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Service
+@Component
 public class RiotApiFacade {
 
 	private final SummonerService summonerService;
