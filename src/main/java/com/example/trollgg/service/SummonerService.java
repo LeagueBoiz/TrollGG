@@ -20,5 +20,4 @@ public class SummonerService {
 		String url = RIOT_URL + summonerName + "?api_key=" + API_KEY;
 		return new RestTemplate().getForObject(url, SummonerDto.class);
 	}
-
 }
