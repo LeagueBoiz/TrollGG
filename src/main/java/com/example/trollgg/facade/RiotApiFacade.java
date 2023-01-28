@@ -1,11 +1,11 @@
 package com.example.trollgg.facade;
 
 import com.example.trollgg.dto.LeagueDto;
-import com.example.trollgg.service.LeagueService;
+import com.example.trollgg.service.ApiService.LeagueService;
 import org.springframework.stereotype.Component;
 
 import com.example.trollgg.dto.SummonerDto;
-import com.example.trollgg.service.SummonerService;
+import com.example.trollgg.service.ApiService.SummonerService;
 
 import lombok.RequiredArgsConstructor;
 
