@@ -1,4 +1,4 @@
-package com.example.trollgg.service;
+package com.example.trollgg.service.ApiService;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
