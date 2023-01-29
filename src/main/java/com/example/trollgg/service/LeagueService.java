@@ -1,4 +1,4 @@
-package com.example.trollgg.service.ApiService;
+package com.example.trollgg.service;
 
 import com.example.trollgg.dto.LeagueDto;
 import com.example.trollgg.dto.LeagueEntryDTO;
