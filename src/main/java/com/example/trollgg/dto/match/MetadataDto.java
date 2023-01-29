@@ -1,4 +1,4 @@
-package com.example.trollgg.dto;
+package com.example.trollgg.dto.match;
 
 public record MetadataDto(
 	String matchId

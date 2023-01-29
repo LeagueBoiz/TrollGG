@@ -1,37 +1,36 @@
 package com.example.trollgg.controller;
 
-import java.util.List;
-
-import com.example.trollgg.dto.LeagueDto;
+import com.example.trollgg.dto.SummonerDto;
+import com.example.trollgg.dto.SummonerProfileDto;
+import com.example.trollgg.facade.RiotApiFacade;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.trollgg.dto.MatchDto;
-import com.example.trollgg.dto.SummonerDto;
-import com.example.trollgg.facade.RiotApiFacade;
-
-import lombok.RequiredArgsConstructor;
-
-@RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
+@RestController
 public class SummonerController {
-
     private final RiotApiFacade riotAPIFacade;
 
+    /**
+     * @param summonerName 소환사 이름
+     * @return 소환사의 id, puuid 등 개인정보
+     */
     @GetMapping("/search")
     public ResponseEntity<SummonerDto> searchSummoner(@RequestParam(value = "title") String summonerName) {
         return ResponseEntity.ok(riotAPIFacade.getSummonerData(summonerName));
     }
 
-    @GetMapping("/league")
-    public ResponseEntity<LeagueDto> leagueData(@RequestParam(value = "title") String summonerName) {
-        return ResponseEntity.ok(riotAPIFacade.getLeague(summonerName));
-    }
-
-    @GetMapping("/match")
-    public ResponseEntity<List<MatchDto>> matchData(@RequestParam(value = "title") String summonerName) {
-        return ResponseEntity.ok(riotAPIFacade.getMatch(summonerName));
+    /**
+     * @param summonerName 소환사 이름
+     * @return 소환사 프로필 정보
+     */
+    @GetMapping("/summoner/profile")
+    public ResponseEntity<SummonerProfileDto> getSummonerProfile(@RequestParam(value = "title") String summonerName) {
+        return ResponseEntity.ok(riotAPIFacade.getSummonerProfile(summonerName));
     }
 }

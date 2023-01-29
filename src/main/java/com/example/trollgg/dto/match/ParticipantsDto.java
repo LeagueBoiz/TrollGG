@@ -1,8 +1,8 @@
-package com.example.trollgg.dto;
+package com.example.trollgg.dto.match;
 
 import java.util.List;
 
-public record ParticipantsDTO(
+public record ParticipantsDto(
 
 	String puuid,
 	String summonerName,
@@ -13,7 +13,7 @@ public record ParticipantsDTO(
 	int deaths,
 	int assists,
 	boolean win,
-	List<Teams> teams
+	List<TeamsDto> teams
 
 ) {
 }

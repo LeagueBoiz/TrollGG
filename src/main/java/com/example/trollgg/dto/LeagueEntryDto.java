@@ -1,6 +1,6 @@
 package com.example.trollgg.dto;
 
-public record LeagueEntryDTO (
+public record LeagueEntryDto(
         String leagueId,
         String summonerId,
         String summonerName,
@@ -14,7 +14,7 @@ public record LeagueEntryDTO (
         boolean veteran,
         boolean freshBlood,
         boolean inactive,
-        MiniSeriesDTO miniSeries
+        MiniSeriesDto miniSeries
 ) {
 
 }

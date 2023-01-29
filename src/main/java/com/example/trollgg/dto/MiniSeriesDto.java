@@ -1,6 +1,6 @@
 package com.example.trollgg.dto;
 
-public record MiniSeriesDTO (
+public record MiniSeriesDto(
         int losses,
         String progress,
         int target,
