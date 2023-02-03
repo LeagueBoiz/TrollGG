@@ -1,4 +1,4 @@
-package com.example.trollgg.service.ApiService;
+package com.example.trollgg.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,12 @@ public class SummonerService {
 
 	@Value("${riot.api.key}")
 	private String API_KEY;
-	private String RIOT_URL = "https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/";
+	private static final String SUMMONER_DATA_RIOT_URL = "https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/";
 
 	public SummonerDto getSummonerData(String summonerName) {
-		String url = RIOT_URL + summonerName + "?api_key=" + API_KEY;
+		String url = SUMMONER_DATA_RIOT_URL + summonerName + "?api_key=" + API_KEY;
 		return new RestTemplate().getForObject(url, SummonerDto.class);
 	}
+
+
 }
