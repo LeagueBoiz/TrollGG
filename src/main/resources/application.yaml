@@ -5,10 +5,16 @@ spring:
 
 riot:
   api:
-    key: "" ##riot key 입력
+    key: ENC(mICQ0jITfFdZ1PNd2wxGtkWVslzkmROg5tFEPiKD6fxam9IJsYGLqgRmm00Wljz4CZXo1Cw316g=)
+    ##riot key 입력
 
 server:
   port: 8080
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
 ---
 
 spring:

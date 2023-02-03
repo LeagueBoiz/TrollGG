@@ -27,7 +27,7 @@ public class Summoner {
     @Column
     private String iconImg;
 
-    @OneToMany(mappedBy = "summoner")
-    @JsonManagedReference(value = "user-cafe-FK")
-    private List<Match> matchList;
+//    @OneToMany(mappedBy = "summoner")
+//    @JsonManagedReference(value = "user-cafe-FK")
+//    private List<Match> matchList;
 }
