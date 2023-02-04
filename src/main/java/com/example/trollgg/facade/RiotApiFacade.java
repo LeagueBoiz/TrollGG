@@ -29,7 +29,8 @@ public class RiotApiFacade {
 	}
 
 	public LeagueDto getLeague(String summonerName){
-		return leagueService.getLeagueData(summonerService.getSummonerData(summonerName).id());
+		String id = summonerService.getSummonerData(summonerName).id();
+		return leagueService.getLeagueData(id);
 	}
 
 	public List<MatchDto> getMatch(String summonerName) {
@@ -38,6 +39,15 @@ public class RiotApiFacade {
 	}
 
 	public SummonerProfileDto getSummonerProfile(String summonerName) {
+		SummonerDto summonerDto = summonerService.getSummonerData(summonerName);
+		LeagueEntryDto leagueEntryDto =leagueService.getFistLeagueData(summonerDto.id());
+		String profileUrl = dataDragonService.getProfileUrl(summonerDto.profileIconId());
+		String winningRate = NumberUtils.winningRate(leagueEntryDto.wins(),leagueEntryDto.wins()+leagueEntryDto.losses());
+
+		return new SummonerProfileDto(leagueEntryDto,profileUrl,winningRate);
+	}
+
+	public Object getSummonerRankProfile(String summonerName) {
 		SummonerDto summonerDto = summonerService.getSummonerData(summonerName);
 		LeagueEntryDto leagueEntryDto =leagueService.getFistLeagueData(summonerDto.id());
 		String profileUrl = dataDragonService.getProfileUrl(summonerDto.profileIconId());
