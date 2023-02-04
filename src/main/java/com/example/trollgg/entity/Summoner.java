@@ -26,6 +26,7 @@ public class Summoner {
 
     @Column
     private String iconImg;
+    //데이터 구축후 진행
 
 //    @OneToMany(mappedBy = "summoner")
 //    @JsonManagedReference(value = "user-cafe-FK")
