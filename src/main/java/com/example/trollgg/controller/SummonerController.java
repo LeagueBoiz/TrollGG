@@ -5,10 +5,7 @@ import com.example.trollgg.dto.SummonerProfileDto;
 import com.example.trollgg.facade.RiotApiFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -32,5 +29,10 @@ public class SummonerController {
     @GetMapping("/summoner/profile")
     public ResponseEntity<SummonerProfileDto> getSummonerProfile(@RequestParam(value = "title") String summonerName) {
         return ResponseEntity.ok(riotAPIFacade.getSummonerProfile(summonerName));
+    }
+
+    @PostMapping("/summoner/profile/reset")
+    public ResponseEntity<Boolean> resetInfo(@RequestParam(value = "title") String summonerName) {
+        return ResponseEntity.ok(riotAPIFacade.resetdata(summonerName));
     }
 }
