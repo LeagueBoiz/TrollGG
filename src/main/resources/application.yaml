@@ -2,6 +2,12 @@ spring:
   profiles:
     active:
     default: local
+    ##h2 데이터
+    datasource:
+      username: sa
+      url: jdbc:h2:./extjsprac;AUTO_SERVER=TRUE
+      driverClassName: org.h2.Driver
+      password: ''
 
 riot:
   api:
@@ -15,12 +21,6 @@ jasypt:
   encryptor:
     bean: jasyptStringEncryptor
 
-spring:
-  datasource:
-    username: sa
-    url: jdbc:h2:./extjsprac;AUTO_SERVER=TRUE
-    driverClassName: org.h2.Driver
-    password: ''
 
 
 ---

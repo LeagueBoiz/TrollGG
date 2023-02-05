@@ -1,11 +1,9 @@
 package com.example.trollgg.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -16,16 +14,25 @@ public class Summoner {
     private Long id;
 
     @Column
+    private String summonerName;
+
+    @Column
+    private String profileUrl;
+
+    @Column
+    private String tier;
+
+    @Column
+    private String rankScore;
+
+    @Column
     private Integer win;
 
     @Column
     private Integer loss;
 
     @Column
-    private Integer rankScore;
-
-    @Column
-    private String iconImg;
+    private String winningRate;
     //데이터 구축후 진행
 
 //    @OneToMany(mappedBy = "summoner")

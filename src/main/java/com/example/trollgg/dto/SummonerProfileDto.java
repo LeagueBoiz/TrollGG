@@ -1,8 +1,10 @@
 package com.example.trollgg.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Builder
 @Getter
 @RequiredArgsConstructor
 public class SummonerProfileDto {
@@ -10,8 +12,8 @@ public class SummonerProfileDto {
     private String profileUrl;
     private String tier;
     private String rank;
-    private int wins;
-    private int losses;
+    private Integer wins;
+    private Integer losses;
     private String winningRate;
     public SummonerProfileDto(LeagueEntryDto league, String profileUrl, String winningRate ) {
         this.summonerName = league.summonerName();
@@ -22,4 +24,5 @@ public class SummonerProfileDto {
         this.losses = league.losses();
         this.winningRate = winningRate;
     }
+
 }

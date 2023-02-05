@@ -5,6 +5,8 @@ import com.example.trollgg.dto.LeagueEntryDto;
 import com.example.trollgg.dto.SummonerDto;
 import com.example.trollgg.dto.SummonerProfileDto;
 import com.example.trollgg.dto.match.MatchDto;
+import com.example.trollgg.entity.Summoner;
+import com.example.trollgg.repository.SummonerRepository;
 import com.example.trollgg.service.DataDragonService;
 import com.example.trollgg.service.LeagueService;
 import com.example.trollgg.service.MatchService;
@@ -24,6 +26,8 @@ public class RiotApiFacade {
 	private final MatchService matchService;
 	private final DataDragonService dataDragonService;
 
+	private final SummonerRepository summonerRepository;
+
 	public SummonerDto getSummonerData(String summonerName) {
 		return summonerService.getSummonerData(summonerName);
 	}
@@ -38,11 +42,47 @@ public class RiotApiFacade {
 	}
 
 	public SummonerProfileDto getSummonerProfile(String summonerName) {
+//		SummonerDto summonerDto = summonerService.getSummonerData(summonerName);
+//		LeagueEntryDto leagueEntryDto =leagueService.getFistLeagueData(summonerDto.id());
+//		String profileUrl = dataDragonService.getProfileUrl(summonerDto.profileIconId());
+//		String winningRate = NumberUtils.winningRate(leagueEntryDto.wins(),leagueEntryDto.wins()+leagueEntryDto.losses());
+
+		Summoner summoner =summonerRepository.findSummonerBySummonerName(summonerName);
+
+		String summonerName1 = summoner.getSummonerName();
+
+		String profileUrl1 = summoner.getProfileUrl();
+
+		String tier = summoner.getTier();
+
+		String rank = summoner.getRankScore();
+
+		Integer wins = summoner.getWin();
+
+		Integer loss = summoner.getLoss();
+
+		String winningRate1 = summoner.getWinningRate();
+
+		SummonerProfileDto summonerProfileDto = SummonerProfileDto.builder()
+				.summonerName(summonerName1)
+				.profileUrl(profileUrl1)
+				.tier(tier)
+				.rank(rank)
+				.wins(wins)
+				.losses(loss)
+				.winningRate(winningRate1)
+				.build();
+
+		return summonerProfileDto;
+	}
+
+	public boolean resetdata(String summonerName){
+
 		SummonerDto summonerDto = summonerService.getSummonerData(summonerName);
 		LeagueEntryDto leagueEntryDto =leagueService.getFistLeagueData(summonerDto.id());
 		String profileUrl = dataDragonService.getProfileUrl(summonerDto.profileIconId());
 		String winningRate = NumberUtils.winningRate(leagueEntryDto.wins(),leagueEntryDto.wins()+leagueEntryDto.losses());
 
-		return new SummonerProfileDto(leagueEntryDto,profileUrl,winningRate);
+		return true;
 	}
 }
