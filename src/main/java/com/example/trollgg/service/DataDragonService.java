@@ -17,6 +17,9 @@ public class DataDragonService {
     private static final String DATA_DRAGON_URL = "https://ddragon.leagueoflegends.com/cdn/";
     private static final String DATA_DRAGON_VERSION = "https://ddragon.leagueoflegends.com/api/versions.json";
 
+    /**
+     * @return Url 입력에 필요한 DataDragon 의 최신버전을 가져옴
+     */
     public String getLatestDataDragonVersion() {
         try {
             List<String> versionList = new RestTemplate()
