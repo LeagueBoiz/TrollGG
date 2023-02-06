@@ -47,7 +47,10 @@ public class RiotApiFacade {
 //		LeagueEntryDto leagueEntryDto =leagueService.getFistLeagueData(summonerDto.id());
 //		String profileUrl = dataDragonService.getProfileUrl(summonerDto.profileIconId());
 //		String winningRate = NumberUtils.winningRate(leagueEntryDto.wins(),leagueEntryDto.wins()+leagueEntryDto.losses());
-
+		//데이터없는 첫 조회시 데이터없는 소환사 데이터 생성
+		if(!summonerRepository.existsSummonerBySummonerName(summonerName)){
+			summonerRepository.save(new Summoner(summonerName));
+		}
 		Summoner summoner =summonerRepository.findSummonerBySummonerName(summonerName);
 
 		String summonerName1 = summoner.getSummonerName();
@@ -81,9 +84,16 @@ public class RiotApiFacade {
 
 		SummonerDto summonerDto = summonerService.getSummonerData(summonerName);
 		LeagueEntryDto leagueEntryDto =leagueService.getFistLeagueData(summonerDto.id());
+
 		String profileUrl = dataDragonService.getProfileUrl(summonerDto.profileIconId());
 		String winningRate = NumberUtils.winningRate(leagueEntryDto.wins(),leagueEntryDto.wins()+leagueEntryDto.losses());
-
+		String tier = leagueEntryDto.tier();
+		String rankScore = leagueEntryDto.rank();
+		Integer win = leagueEntryDto.wins();
+		Integer loss = leagueEntryDto.losses();
+		Summoner summoner = summonerRepository.findSummonerBySummonerName(summonerName);
+		summoner.resetData(profileUrl,winningRate,tier,rankScore,win,loss);
+		summonerRepository.save(summoner);
 		return true;
 	}
 

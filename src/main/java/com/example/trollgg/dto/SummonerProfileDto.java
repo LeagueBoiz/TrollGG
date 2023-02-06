@@ -25,4 +25,13 @@ public class SummonerProfileDto {
         this.winningRate = winningRate;
     }
 
+    public SummonerProfileDto(String summonerName, String profileUrl, String tier, String rank, Integer wins, Integer losses, String winningRate) {
+        this.summonerName = summonerName;
+        this.profileUrl = profileUrl;
+        this.tier = tier;
+        this.rank = rank;
+        this.wins = wins;
+        this.losses = losses;
+        this.winningRate = winningRate;
+    }
 }
