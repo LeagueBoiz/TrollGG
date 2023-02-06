@@ -60,7 +60,6 @@ public class MatchService {
 				.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<MatchDto>() {
 				})
 				.getBody();
-
-
+		
 	}
 }
