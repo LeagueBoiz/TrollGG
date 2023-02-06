@@ -1,7 +1,9 @@
 package com.example.trollgg.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 
@@ -39,8 +41,24 @@ public class Summoner {
 
     @Column
     private long summonerLevel;
-    public Summoner(String summonerName) {
-        this.summonerName =summonerName;
+
+    @Column
+    private String encryptedId;
+
+    @Column
+    private String accountId;
+
+    @Builder
+    public Summoner(String summonerName, String profileUrl, String puuid, long summonerLevel, String encryptedId,String accountId) {
+        Assert.hasText(summonerName, "summonerName must not be empty");
+        Assert.hasText(accountId, "accountId must not be empty");
+        Assert.hasText(encryptedId, "encryptedId must not be empty");
+        this.summonerName = summonerName;
+        this.profileUrl = profileUrl;
+        this.puuid = puuid;
+        this.summonerLevel = summonerLevel;
+        this.encryptedId = encryptedId;
+        this.accountId =accountId;
     }
 
     public void resetData(String profileUrl,String winningRate,String tier, String rankScore, Integer win,Integer loss) {

@@ -15,7 +15,9 @@ public class SummonerProfileDto {
     private Integer wins;
     private Integer losses;
     private String winningRate;
-    public SummonerProfileDto(LeagueEntryDto league, String profileUrl, String winningRate ) {
+
+    private long summonerLevel;
+    public SummonerProfileDto(LeagueEntryDto league, String profileUrl, String winningRate,long summonerLevel) {
         this.summonerName = league.summonerName();
         this.profileUrl = profileUrl;
         this.tier = league.tier();
@@ -23,9 +25,10 @@ public class SummonerProfileDto {
         this.wins = league.wins();
         this.losses = league.losses();
         this.winningRate = winningRate;
+        this.summonerLevel = summonerLevel;
     }
 
-    public SummonerProfileDto(String summonerName, String profileUrl, String tier, String rank, Integer wins, Integer losses, String winningRate) {
+    public SummonerProfileDto(String summonerName, String profileUrl, String tier, String rank, Integer wins, Integer losses, String winningRate,long summonerLevel) {
         this.summonerName = summonerName;
         this.profileUrl = profileUrl;
         this.tier = tier;
@@ -33,5 +36,6 @@ public class SummonerProfileDto {
         this.wins = wins;
         this.losses = losses;
         this.winningRate = winningRate;
+        this.summonerLevel = summonerLevel;
     }
 }

@@ -31,6 +31,10 @@ public class SummonerController {
         return ResponseEntity.ok(riotAPIFacade.getSummonerProfile(summonerName));
     }
 
+    /**
+     * @param summonerName 소환사 이름
+     * @return 데이터갱신 확인값
+     */
     @PostMapping("/summoner/profile/reset")
     public ResponseEntity<Boolean> resetInfo(@RequestParam(value = "title") String summonerName) {
         return ResponseEntity.ok(riotAPIFacade.resetdata(summonerName));
