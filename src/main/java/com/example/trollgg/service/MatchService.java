@@ -28,8 +28,9 @@ public class MatchService {
 			String url = MATCH_ID_RIOT_URL + puuid + "/ids?start=0&count=20" + "&&api_key=" + API_KEY;
 
 			return new RestTemplate()
-				.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>(){})
-				.getBody();
+					.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {
+					})
+					.getBody();
 
 		} catch (Exception e) {
 			throw new ExternalApiCallException(e.getMessage());

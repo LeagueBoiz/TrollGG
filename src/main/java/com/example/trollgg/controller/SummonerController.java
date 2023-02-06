@@ -37,6 +37,6 @@ public class SummonerController {
      */
     @PostMapping("/summoner/profile/reset")
     public ResponseEntity<Boolean> resetInfo(@RequestParam(value = "title") String summonerName) {
-        return ResponseEntity.ok(riotAPIFacade.resetdata(summonerName));
+        return ResponseEntity.ok(riotAPIFacade.resetData(summonerName));
     }
 }

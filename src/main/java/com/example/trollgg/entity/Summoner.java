@@ -1,15 +1,18 @@
 package com.example.trollgg.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name="summoner")
 public class Summoner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +51,8 @@ public class Summoner {
     @Column
     private String accountId;
 
+    @OneToMany (mappedBy = "summoner")
+    List<Match> matchList;
     @Builder
     public Summoner(String summonerName, String profileUrl, String puuid, long summonerLevel, String encryptedId,String accountId) {
         Assert.hasText(summonerName, "summonerName must not be empty");
@@ -69,9 +74,4 @@ public class Summoner {
         this.loss = loss;
         this.winningRate = winningRate;
     }
-    //데이터 구축후 진행
-
-//    @OneToMany(mappedBy = "summoner")
-//    @JsonManagedReference(value = "user-cafe-FK")
-//    private List<Match> matchList;
 }

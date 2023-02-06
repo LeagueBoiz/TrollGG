@@ -26,4 +26,8 @@ public class MatchController {
         return ResponseEntity.ok(riotApiFacade.getMatch(summonerName));
     }
 
+    @GetMapping("/match/Score")
+    public ResponseEntity<List<MatchDto>> scores(@RequestParam(value = "title") String summonerName) {
+        return ResponseEntity.ok(riotApiFacade.getMatch(summonerName));
+    }
 }

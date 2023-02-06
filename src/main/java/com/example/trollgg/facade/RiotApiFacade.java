@@ -2,6 +2,7 @@ package com.example.trollgg.facade;
 
 import com.example.trollgg.dto.LeagueDto;
 import com.example.trollgg.dto.LeagueEntryDto;
+import com.example.trollgg.dto.ScoreDto.TrollScoreDto;
 import com.example.trollgg.dto.SummonerDto;
 import com.example.trollgg.dto.SummonerProfileDto;
 import com.example.trollgg.dto.match.MatchDto;
@@ -43,23 +44,9 @@ public class RiotApiFacade {
 	}
 
 	public SummonerProfileDto getSummonerProfile(String summonerName) {
-//		SummonerDto summonerDto = summonerService.getSummonerData(summonerName);
-//		LeagueEntryDto leagueEntryDto =leagueService.getFistLeagueData(summonerDto.id());
-//		String profileUrl = dataDragonService.getProfileUrl(summonerDto.profileIconId());
-//		String winningRate = NumberUtils.winningRate(leagueEntryDto.wins(),leagueEntryDto.wins()+leagueEntryDto.losses());
 		//데이터없는 첫 조회시 데이터없는 소환사 데이터 생성
 		if (!summonerRepository.existsSummonerBySummonerName(summonerName)) {
-			SummonerDto summonerDto = summonerService.getSummonerData(summonerName);
-			String profileUrl = dataDragonService.getProfileUrl(summonerDto.profileIconId());
-			Summoner summoner = Summoner.builder()
-					.summonerName(summonerName)
-					.profileUrl(profileUrl)
-					.puuid(summonerDto.puuid())
-					.summonerLevel(summonerDto.summonerLevel())
-					.encryptedId(summonerDto.id())
-					.accountId(summonerDto.accountId())
-					.build();
-			summonerRepository.save(summoner);
+			summonerService.firstEnroll(summonerName);
 		}
 		Summoner summoner = summonerRepository.findSummonerBySummonerName(summonerName);
 
@@ -93,7 +80,7 @@ public class RiotApiFacade {
 		return summonerProfileDto;
 	}
 
-	public boolean resetdata(String summonerName){
+	public boolean resetData(String summonerName){
 
 		SummonerDto summonerDto = summonerService.getSummonerData(summonerName);
 		Summoner summoner = summonerRepository.findSummonerBySummonerName(summonerName);
@@ -118,5 +105,11 @@ public class RiotApiFacade {
 		long summonerLevel = summonerDto.summonerLevel();
 
 		return new SummonerProfileDto(leagueEntryDto,profileUrl,winningRate,summonerLevel);
+	}
+
+	public TrollScoreDto trollScoreDto(String summonerName) {
+		List<String> matchIdList = matchService.getMatchIdList(summonerService.getSummonerData(summonerName).puuid());
+		TrollScoreDto trollScoreDto = TrollScoreDto.builder().build();
+		return trollScoreDto;
 	}
 }
