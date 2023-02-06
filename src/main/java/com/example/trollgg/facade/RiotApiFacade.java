@@ -6,6 +6,7 @@ import com.example.trollgg.dto.ScoreDto.TrollScoreDto;
 import com.example.trollgg.dto.SummonerDto;
 import com.example.trollgg.dto.SummonerProfileDto;
 import com.example.trollgg.dto.match.MatchDto;
+import com.example.trollgg.entity.Match;
 import com.example.trollgg.entity.Summoner;
 import com.example.trollgg.repository.SummonerRepository;
 import com.example.trollgg.service.DataDragonService;
@@ -85,6 +86,10 @@ public class RiotApiFacade {
 		SummonerDto summonerDto = summonerService.getSummonerData(summonerName);
 		Summoner summoner = summonerRepository.findSummonerBySummonerName(summonerName);
 		LeagueEntryDto leagueEntryDto =leagueService.getFistLeagueData(summoner.getEncryptedId());
+		List<String> matchIdList = matchService.getMatchIdList(summoner.getPuuid());
+		for(String matchId: matchIdList){
+
+		}
 
 		String profileUrl = dataDragonService.getProfileUrl(summonerDto.profileIconId());
 		String winningRate = NumberUtils.winningRate(leagueEntryDto.wins(),leagueEntryDto.wins()+leagueEntryDto.losses());

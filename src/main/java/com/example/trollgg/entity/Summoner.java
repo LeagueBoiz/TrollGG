@@ -12,13 +12,12 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name="summoner")
 public class Summoner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "SUMMONER_NAME")
     private String summonerName;
 
     @Column
@@ -51,7 +50,8 @@ public class Summoner {
     @Column
     private String accountId;
 
-    @OneToMany (mappedBy = "summoner")
+    @OneToMany
+    @JoinColumn(name = "MATCH_ID")
     List<Match> matchList;
     @Builder
     public Summoner(String summonerName, String profileUrl, String puuid, long summonerLevel, String encryptedId,String accountId) {

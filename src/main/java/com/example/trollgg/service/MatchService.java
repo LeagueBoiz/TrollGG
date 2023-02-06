@@ -3,6 +3,7 @@ package com.example.trollgg.service;
 import java.util.List;
 import java.util.Objects;
 
+import com.example.trollgg.entity.Match;
 import com.example.trollgg.error.ExternalApiCallException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -51,5 +52,15 @@ public class MatchService {
 			})
 			.filter(Objects::nonNull)
 			.toList();
+	}
+
+	public void saveMatch(String matchId) {
+		String url = MATCH_DATA_RIOT_URL + matchId + "?api_key=" + API_KEY;
+		MatchDto matchDto = new RestTemplate()
+				.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<MatchDto>() {
+				})
+				.getBody();
+
+
 	}
 }
