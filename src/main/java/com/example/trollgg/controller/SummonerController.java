@@ -29,8 +29,14 @@ public class SummonerController {
      * @param summonerName 소환사 이름
      * @return 소환사 프로필 정보
      */
-    @GetMapping("/summoner/profile")
-    public ResponseEntity<SummonerProfileDto> getSummonerProfile(@RequestParam(value = "title") String summonerName) {
-        return ResponseEntity.ok(riotAPIFacade.getSummonerProfile(summonerName));
+//    @GetMapping("/summoner/profile")
+//    public ResponseEntity<SummonerProfileDto> getSummonerProfile(@RequestParam(value = "title") String summonerName) {
+//        return ResponseEntity.ok(riotAPIFacade.getSummonerProfile(summonerName));
+//    }
+
+
+    @GetMapping("/summoner/rank/profile")
+    public ResponseEntity<SummonerProfileDto> getSummonerRankProfile(@RequestParam(value = "title") String summonerName) {
+            return ResponseEntity.ok(riotAPIFacade.getSummonerRankProfile(summonerName));
     }
 }

@@ -1,5 +1,5 @@
-package com.example.trollgg.entity;
+package com.example.trollgg.enums;
 
 public enum Rank {
-
+    UNRANKED
 }

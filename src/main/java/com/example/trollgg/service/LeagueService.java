@@ -35,11 +35,4 @@ public class LeagueService {
             throw new ExternalApiCallException(e.getMessage());
         }
     }
-
-    public LeagueEntryDto getFistLeagueData(String summonerId) {
-        return getLeagueData(summonerId).leagueData().stream()
-                .filter(Objects::nonNull)
-                .findFirst()
-                .orElseThrow(()->new NoSuchElementException("소환사의 정보를 찾을 수 없습니다."));
-    }
 }
