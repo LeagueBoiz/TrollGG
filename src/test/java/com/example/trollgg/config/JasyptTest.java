@@ -19,6 +19,7 @@ public class JasyptTest extends JasyptConfig {
         String decryptedText = jasypt.decrypt(encryptedText);
 
         System.out.println(encryptedText);
+        System.out.println(decryptedText);
 
         assertThat(plainText).isEqualTo(decryptedText);
     }
