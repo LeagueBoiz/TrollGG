@@ -21,10 +21,6 @@ public class Match {
     @Column
     private String gameMode;
 
-    @OneToMany
-    @JoinColumn(name = "SUMMONER_NAME")
-    List<Summoner> summonerList;
-
     @Column
     private int kills;
 
@@ -33,4 +29,8 @@ public class Match {
 
     @Column
     private int death;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Summoner summoner;
 }

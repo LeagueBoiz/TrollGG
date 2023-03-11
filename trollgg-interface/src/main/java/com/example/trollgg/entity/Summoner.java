@@ -7,13 +7,16 @@ import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "summoner")
 public class Summoner {
     @Id
+    @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -50,9 +53,9 @@ public class Summoner {
     @Column
     private String accountId;
 
-    @OneToMany
-    @JoinColumn(name = "MATCH_ID")
-    List<Match> matchList;
+    @OneToMany(mappedBy = "summoner")
+    private List<Match> matchList = new ArrayList<>();
+
     @Builder
     public Summoner(String summonerName, String profileUrl, String puuid, long summonerLevel, String encryptedId,String accountId) {
         Assert.hasText(summonerName, "summonerName must not be empty");
