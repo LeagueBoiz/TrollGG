@@ -87,10 +87,8 @@ public class RiotApiFacade {
 		Summoner summoner = summonerRepository.findSummonerBySummonerName(summonerName);
 		LeagueEntryDto leagueEntryDto =leagueService.getFistLeagueData(summoner.getEncryptedId());
 		List<String> matchIdList = matchService.getMatchIdList(summoner.getPuuid());
-		for(String matchId: matchIdList){
-
+		for(String matchId: matchIdList) {
 		}
-
 		String profileUrl = dataDragonService.getProfileUrl(summonerDto.profileIconId());
 		String winningRate = NumberUtils.winningRate(leagueEntryDto.wins(),leagueEntryDto.wins()+leagueEntryDto.losses());
 		String tier = leagueEntryDto.tier();

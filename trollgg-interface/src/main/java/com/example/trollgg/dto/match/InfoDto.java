@@ -4,7 +4,10 @@ import java.util.List;
 
 public record InfoDto(
 	String gameMode,
-	List<ParticipantsDto> participants
+	List<ParticipantsDto> participants,
+	long gameDuration,
+
+	long gameEndTimestamp
 
 ) {
 }
