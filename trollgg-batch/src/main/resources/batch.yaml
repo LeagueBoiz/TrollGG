@@ -1,0 +1,10 @@
+spring.main.web-application-type: none
+
+spring.profile.active: dev
+
+spring.config.import:
+  - /application.yaml
+spring.batch.job.names: ${job:none}
+
+---
+spring.config.activate.on-profile: dev

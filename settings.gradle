@@ -1,1 +1,3 @@
 rootProject.name = 'TrollGG'
+include('trollgg-interface')
+include('trollgg-batch')
