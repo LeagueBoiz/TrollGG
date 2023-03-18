@@ -78,15 +78,19 @@ public class Match implements Comparable<Match> {
     @Column
     private long gameduration;
 
+    @JoinColumn(name = "summoner_id")
+    @ManyToOne
+    private Summoner summoner;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "matchplayer_id")
     @JsonManagedReference(value = "matchplayer-match-FK")
     private List<MatchPlayer> matchPlayers = new ArrayList<>();
 
-    public Match(MatchDto matchDto, String matchId){
-        this.gameEndTimeStamp=matchDto.info().gameEndTimestamp();
+    public Match(MatchDto matchDto, String matchId) {
+        this.gameEndTimeStamp = matchDto.info().gameEndTimestamp();
         this.gameMode = matchDto.info().gameMode();
-        this.matchId =matchId;
+        this.matchId = matchId;
         this.gameduration = matchDto.info().gameDuration();
     }
 

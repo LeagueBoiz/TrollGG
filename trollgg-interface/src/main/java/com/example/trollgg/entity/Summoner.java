@@ -1,13 +1,14 @@
 package com.example.trollgg.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.example.trollgg.dto.LeagueEntryDto;
+import com.example.trollgg.dto.SummonerDto;
+import com.example.trollgg.util.NumberUtils;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -16,7 +17,7 @@ import java.util.List;
 @Table(name = "summoner")
 public class Summoner {
     @Id
-    @Column(name = "member_id")
+    @Column(name = "summoner_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -54,7 +55,7 @@ public class Summoner {
     private String accountId;
 
     @OneToMany(mappedBy = "summoner")
-    private List<Match> matchList = new ArrayList<>();
+    private List<Match> matchList;
 
     @Builder
     public Summoner(String summonerName, String profileUrl, String puuid, long summonerLevel, String encryptedId,String accountId) {
@@ -66,15 +67,21 @@ public class Summoner {
         this.puuid = puuid;
         this.summonerLevel = summonerLevel;
         this.encryptedId = encryptedId;
-        this.accountId =accountId;
+        this.accountId = accountId;
     }
 
-    public void resetData(String profileUrl,String winningRate,String tier, String rankScore, Integer win,Integer loss) {
-        this.profileUrl =profileUrl;
-        this.tier =tier;
-        this.rankScore= rankScore;
-        this.win = win;
-        this.loss = loss;
-        this.winningRate = winningRate;
+    public void resetData(SummonerDto summoner, String profileUrl, LeagueEntryDto leagueEntryDto) {
+        this.summonerName = summoner.name();
+        this.profileUrl = profileUrl;
+        this.tier = leagueEntryDto.tier();
+        this.rankScore = leagueEntryDto.rank();
+        this.win = leagueEntryDto.wins();
+        this.loss = leagueEntryDto.losses();
+        this.winningRate = getWinningRate(leagueEntryDto.wins(), leagueEntryDto.losses());
+        this.summonerLevel = summoner.summonerLevel();
+    }
+
+    private String getWinningRate(int wins, int losses) {
+        return NumberUtils.winningRate(wins, losses);
     }
 }

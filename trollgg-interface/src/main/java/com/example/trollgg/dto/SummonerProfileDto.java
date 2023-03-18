@@ -1,13 +1,15 @@
 package com.example.trollgg.dto;
 
-import lombok.Builder;
+import com.example.trollgg.entity.Summoner;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@Builder
 @Getter
 @RequiredArgsConstructor
 public class SummonerProfileDto {
+
+    private long id;
+    private String encryptedId;
     private String summonerName;
     private String profileUrl;
     private String tier;
@@ -15,9 +17,9 @@ public class SummonerProfileDto {
     private Integer wins;
     private Integer losses;
     private String winningRate;
-
     private long summonerLevel;
-    public SummonerProfileDto(LeagueEntryDto league, String profileUrl, String winningRate,long summonerLevel) {
+
+    public SummonerProfileDto(LeagueEntryDto league, String profileUrl, String winningRate, long summonerLevel) {
         this.summonerName = league.summonerName();
         this.profileUrl = profileUrl;
         this.tier = league.tier();
@@ -28,14 +30,17 @@ public class SummonerProfileDto {
         this.summonerLevel = summonerLevel;
     }
 
-    public SummonerProfileDto(String summonerName, String profileUrl, String tier, String rank, Integer wins, Integer losses, String winningRate,long summonerLevel) {
-        this.summonerName = summonerName;
-        this.profileUrl = profileUrl;
-        this.tier = tier;
-        this.rank = rank;
-        this.wins = wins;
-        this.losses = losses;
-        this.winningRate = winningRate;
-        this.summonerLevel = summonerLevel;
+    public SummonerProfileDto(Summoner summoner) {
+        this.id = summoner.getId();
+        this.encryptedId = summoner.getEncryptedId();
+        this.summonerName = summoner.getSummonerName();
+        this.profileUrl = summoner.getProfileUrl();
+        this.tier = summoner.getTier();
+        this.rank = summoner.getRankScore();
+        this.wins = summoner.getWin();
+        this.losses = summoner.getLoss();
+        this.winningRate = summoner.getWinningRate();
+        this.summonerLevel = summoner.getSummonerLevel();
     }
+
 }

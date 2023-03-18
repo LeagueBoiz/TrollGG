@@ -1,7 +1,7 @@
 package com.example.trollgg.util;
 
-import com.example.assign.entity.Match;
-import com.example.assign.entity.MatchPlayer;
+import com.example.trollgg.entity.Match;
+import com.example.trollgg.entity.MatchPlayer;
 import org.springframework.stereotype.Service;
 
 @Service

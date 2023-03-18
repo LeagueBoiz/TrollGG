@@ -1,7 +1,7 @@
 package com.example.trollgg.util;
 
-import com.example.assign.dto.riotDto.match.ParticipantsDto;
-import com.example.assign.entity.MatchPlayer;
+import com.example.trollgg.dto.match.ParticipantsDto;
+import com.example.trollgg.entity.MatchPlayer;
 import lombok.Getter;
 import lombok.Setter;
 
