@@ -1,4 +1,4 @@
-package com.example.trollgg.dto;
+package com.example.trollgg.dto.riotApi;
 
 public record LeagueEntryDto(
         String leagueId,

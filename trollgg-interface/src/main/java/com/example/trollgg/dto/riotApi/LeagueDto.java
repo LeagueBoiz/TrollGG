@@ -1,4 +1,4 @@
-package com.example.trollgg.dto;
+package com.example.trollgg.dto.riotApi;
 
 import java.util.Set;
 

@@ -1,9 +1,10 @@
 package com.example.trollgg.controller;
 
-import com.example.trollgg.dto.SummonerDto;
+import com.example.trollgg.dto.SummonerInfoDto;
 import com.example.trollgg.dto.SummonerProfileDto;
-import com.example.trollgg.facade.Datafacade;
+import com.example.trollgg.dto.riotApi.SummonerDto;
 import com.example.trollgg.facade.RiotApiFacade;
+import com.example.trollgg.facade.SummonerFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class SummonerController {
     private final RiotApiFacade riotAPIFacade;
-
-    private final Datafacade datafacade;
+    private final SummonerFacade summonerFacade;
 
     /**
      * @param summonerName 소환사 이름
@@ -29,23 +29,17 @@ public class SummonerController {
      * @param summonerName 소환사 이름
      * @return 소환사 프로필 정보
      */
-    @GetMapping("/summoner/profile")
-    public ResponseEntity<SummonerProfileDto> getSummonerProfile(@RequestParam(value = "title") String summonerName) {
-        return ResponseEntity.ok(riotAPIFacade.getSummonerProfile(summonerName));
+    @GetMapping("/summoners")
+    public ResponseEntity<SummonerProfileDto> getSummonerInfo(@RequestParam(value = "title") String summonerName) {
+        return ResponseEntity.ok(riotAPIFacade.getSummonerInfo(summonerName));
     }
 
     /**
      * @param id Summoner pk
-     * @return 데이터갱신 확인값
+     * @return 갱신 데이터
      */
-    @PutMapping("/summoner/{id}/profile/renewal")
-    public ResponseEntity<SummonerProfileDto> resetInfo(@PathVariable long id) {
-        return ResponseEntity.ok(riotAPIFacade.resetData(id));
+    @PutMapping("/summoners/{id}/renewal-info")
+    public ResponseEntity<SummonerInfoDto> renewSummonerInfo(@PathVariable long id) {
+        return ResponseEntity.ok().body(summonerFacade.renewSummonerInfo(id));
     }
-
-    //20게임 전적호출
-//    @GetMapping("/summoner/{summonerName}")
-//    public ResponseEntity<?> record20Summoner(@PathVariable String summonerName) {
-//        return ResponseEntity.status(200).body(datafacade.get20Data(summonerName));
-//    }
 }

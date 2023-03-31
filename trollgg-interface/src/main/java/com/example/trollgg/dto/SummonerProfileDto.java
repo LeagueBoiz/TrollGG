@@ -1,5 +1,6 @@
 package com.example.trollgg.dto;
 
+import com.example.trollgg.dto.riotApi.LeagueEntryDto;
 import com.example.trollgg.entity.Summoner;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,4 @@ public class SummonerProfileDto {
         this.winningRate = summoner.getWinningRate();
         this.summonerLevel = summoner.getSummonerLevel();
     }
-
 }

@@ -1,6 +1,6 @@
 package com.example.trollgg.controller;
 
-import com.example.trollgg.dto.LeagueDto;
+import com.example.trollgg.dto.riotApi.LeagueDto;
 import com.example.trollgg.facade.RiotApiFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController

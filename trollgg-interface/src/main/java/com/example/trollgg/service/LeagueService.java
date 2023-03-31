@@ -1,8 +1,9 @@
 package com.example.trollgg.service;
 
-import com.example.trollgg.dto.LeagueDto;
-import com.example.trollgg.dto.LeagueEntryDto;
+import com.example.trollgg.dto.riotApi.LeagueDto;
+import com.example.trollgg.dto.riotApi.LeagueEntryDto;
 import com.example.trollgg.error.ExternalApiCallException;
+import com.example.trollgg.error.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -10,7 +11,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,7 +20,6 @@ public class LeagueService {
     @Value("${riot.api.key}")
     private String API_KEY;
     private static final String LEAGUE_DATA_RIOT_URL = "https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/";
-
     public LeagueDto getLeagueData(String summonerId) {
         try {
             String url = LEAGUE_DATA_RIOT_URL + summonerId + "?api_key=" + API_KEY;
@@ -40,6 +39,6 @@ public class LeagueService {
         return getLeagueData(summonerId).leagueData().stream()
                 .filter(Objects::nonNull)
                 .findFirst()
-                .orElseThrow(()->new NoSuchElementException("소환사의 정보를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("소환사의 정보를 찾을 수 없습니다."));
     }
 }

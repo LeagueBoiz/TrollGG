@@ -1,25 +1,27 @@
 package com.example.trollgg.entity;
 
-import com.example.trollgg.dto.LeagueEntryDto;
-import com.example.trollgg.dto.SummonerDto;
+import com.example.trollgg.dto.riotApi.LeagueEntryDto;
+import com.example.trollgg.dto.riotApi.SummonerDto;
 import com.example.trollgg.util.NumberUtils;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "summoner")
-public class Summoner {
+public class Summoner extends BaseTimeEntity {
     @Id
     @Column(name = "summoner_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(name = "SUMMONER_NAME")
     private String summonerName;
@@ -54,11 +56,15 @@ public class Summoner {
     @Column
     private String accountId;
 
-    @OneToMany(mappedBy = "summoner")
-    private List<Match> matchList;
+    @BatchSize(size = 30)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "summoner_match",
+            joinColumns = @JoinColumn(name = "summoner_id"),
+            inverseJoinColumns = @JoinColumn(name = "match_id"))
+    private List<Match> matches = new ArrayList<>();
 
     @Builder
-    public Summoner(String summonerName, String profileUrl, String puuid, long summonerLevel, String encryptedId,String accountId) {
+    public Summoner(String summonerName, String profileUrl, String puuid, long summonerLevel, String encryptedId, String accountId) {
         Assert.hasText(summonerName, "summonerName must not be empty");
         Assert.hasText(accountId, "accountId must not be empty");
         Assert.hasText(encryptedId, "encryptedId must not be empty");
@@ -70,15 +76,19 @@ public class Summoner {
         this.accountId = accountId;
     }
 
-    public void resetData(SummonerDto summoner, String profileUrl, LeagueEntryDto leagueEntryDto) {
+    public void updateData(SummonerDto summoner, LeagueEntryDto leagueEntryDto, String profileUrl) {
         this.summonerName = summoner.name();
-        this.profileUrl = profileUrl;
+        this.summonerLevel = summoner.summonerLevel();
         this.tier = leagueEntryDto.tier();
         this.rankScore = leagueEntryDto.rank();
         this.win = leagueEntryDto.wins();
         this.loss = leagueEntryDto.losses();
         this.winningRate = getWinningRate(leagueEntryDto.wins(), leagueEntryDto.losses());
-        this.summonerLevel = summoner.summonerLevel();
+        this.profileUrl = profileUrl;
+    }
+
+    public void updateMatches(List<Match> matches) {
+        this.matches = matches;
     }
 
     private String getWinningRate(int wins, int losses) {

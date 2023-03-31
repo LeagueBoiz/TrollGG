@@ -1,6 +1,6 @@
 package com.example.trollgg.controller;
 
-import com.example.trollgg.dto.match.MatchDto;
+import com.example.trollgg.dto.riotApi.match.MatchDto;
 import com.example.trollgg.facade.RiotApiFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

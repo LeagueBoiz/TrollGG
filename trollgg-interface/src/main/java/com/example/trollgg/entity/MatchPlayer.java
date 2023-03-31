@@ -1,22 +1,26 @@
 package com.example.trollgg.entity;
 
-import com.example.trollgg.dto.match.ParticipantsDto;
+import com.example.trollgg.dto.riotApi.match.ParticipantsDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
-public class MatchPlayer {
+public class MatchPlayer extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column
     private String summonerName;
+
+    @Column
+    private String puuid;
 
     @Column
     private int teamId;
@@ -28,16 +32,16 @@ public class MatchPlayer {
     private int kill;
 
     @Column
-    private int Assist;
+    private int assist;
 
     @Column
-    private int Death;
+    private int death;
 
     @Column
-    private int GoldAttain;
+    private int goldAttain;
 
     @Column
-    private int VisionScore;
+    private int visionScore;
 
     @Column
     private int dealtToChamp;
@@ -48,18 +52,23 @@ public class MatchPlayer {
     @Column
     private String lane;
 
-    public MatchPlayer(ParticipantsDto participantsDto) {
-        this.summonerName = participantsDto.summonerName().replaceAll("\\s+", "").toLowerCase();
+    @ManyToOne
+    @JoinColumn(name = "match_id")
+    private Match match;
+
+    public MatchPlayer(ParticipantsDto participantsDto, Match saved) {
+        this.puuid = participantsDto.puuid();
+        this.summonerName = StringUtils.normalizeSpace(participantsDto.summonerName());
         this.teamId = participantsDto.teamId();
         this.win = participantsDto.win();
         this.kill = participantsDto.kills();
-        this.Assist = participantsDto.assists();
-        this.Death = participantsDto.deaths();
+        this.assist = participantsDto.assists();
+        this.death = participantsDto.deaths();
         this.dealtToChamp = participantsDto.totalDamageDealtToChampions();
-        this.GoldAttain = participantsDto.goldEarned();
-        this.VisionScore = participantsDto.visionScore();
+        this.goldAttain = participantsDto.goldEarned();
+        this.visionScore = participantsDto.visionScore();
         this.champion = participantsDto.championName();
         this.lane = participantsDto.lane();
+        this.match = saved;
     }
-
 }

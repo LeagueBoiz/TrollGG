@@ -1,8 +1,9 @@
 package com.example.trollgg.entity;
 
-import com.example.trollgg.dto.match.MatchDto;
+import com.example.trollgg.dto.riotApi.match.MatchDto;
 import com.example.trollgg.util.AverageCalculator;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,112 +14,116 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Match implements Comparable<Match> {
+public class Match extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    // unix 타입 시간순 정렬때문에 엔티티에서는 변환하지않았습니다.
+    @Column(unique = true)
+    private String matchId;
+
+    @Column
+    private long gameStartTimestamp;
+
     @Column
     private long gameEndTimeStamp;
 
     @Column
     private String gameMode;
 
-    @Override
-    public int compareTo(Match match) {
-        if (match.gameEndTimeStamp < gameEndTimeStamp) {
-            return 1;
-        } else if (match.gameEndTimeStamp > gameEndTimeStamp) {
-            return -1;
-        }
-        return 0;
-    }
-
     @Column
-    private String matchId;
+    private long gameDuration;
 
-    @Column
-    private float aveKill;
+    @Embedded
+    BlueTeamAve blueTeamAve;
 
-    @Column
-    private float aveAssist;
+    @Embedded
+    RedTeamAve redTeamAve;
 
-    @Column
-    private float aveDeath;
-
-    @Column
-    private Integer aveGoldAttain;
-
-    @Column
-    private Integer aveVisionScore;
-
-    @Column
-    private Integer aveDealtToChamp;
-
-    @Column
-    private float aveKill2;
-
-    @Column
-    private float aveAssist2;
-
-    @Column
-    private float aveDeath2;
-
-    @Column
-    private Integer aveGoldAttain2;
-
-    @Column
-    private Integer aveVisionScore2;
-
-    @Column
-    private Integer aveDealtToChamp2;
-
-    @Column
-    private long gameduration;
-
-    @JoinColumn(name = "summoner_id")
-    @ManyToOne
-    private Summoner summoner;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "matchplayer_id")
-    @JsonManagedReference(value = "matchplayer-match-FK")
+    @OneToMany(mappedBy = "match", fetch = FetchType.LAZY)
     private List<MatchPlayer> matchPlayers = new ArrayList<>();
 
-    public Match(MatchDto matchDto, String matchId) {
-        this.gameEndTimeStamp = matchDto.info().gameEndTimestamp();
-        this.gameMode = matchDto.info().gameMode();
-        this.matchId = matchId;
-        this.gameduration = matchDto.info().gameDuration();
-    }
+    @Embeddable
+    @EqualsAndHashCode
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class BlueTeamAve {
+        @Column
+        private float aveKill;
 
-    public void getAveValue(AverageCalculator averageCalculator){
-        this.aveKill = averageCalculator.getAveKills();
-        this.aveAssist = averageCalculator.getAveAssist();
-        this.aveDeath = averageCalculator.getAveDeath();
-        this.aveGoldAttain = averageCalculator.getAveGoldEarn();
-        this.aveVisionScore = averageCalculator.getAveVisionScore();
-        this.aveKill2 = averageCalculator.getAveKills2();
-        this.aveAssist2 = averageCalculator.getAveAssist2();
-        this.aveDeath2 = averageCalculator.getAveDeath2();
-        this.aveGoldAttain2 = averageCalculator.getAveGoldEarn2();
-        this.aveVisionScore2 = averageCalculator.getAveVisionScore2();
-        this.aveDealtToChamp = averageCalculator.getAveDealt();
-        this.aveDealtToChamp2 = averageCalculator.getAveDealt2();
-    }
+        @Column
+        private float aveAssist;
 
-    public MatchPlayer findSummoner(String summonerName){
-        for(MatchPlayer matchPlayer:this.matchPlayers){
-            if(matchPlayer.getSummonerName().equals(summonerName)){
-                return matchPlayer;
-            }
+        @Column
+        private float aveDeath;
+
+        @Column
+        private Integer aveGoldAttain;
+
+        @Column
+        private Integer aveVisionScore;
+
+        @Column
+        private Integer aveDealtToChamp;
+
+        public BlueTeamAve(AverageCalculator averageCalculator) {
+            this.aveKill = averageCalculator.getAveKills();
+            this.aveAssist = averageCalculator.getAveAssist();
+            this.aveDeath = averageCalculator.getAveDeath();
+            this.aveGoldAttain = averageCalculator.getAveGoldEarn();
+            this.aveVisionScore = averageCalculator.getAveVisionScore();
+            this.aveDealtToChamp = averageCalculator.getAveDealt();
         }
-        return null;
     }
 
-    public void addPlayers(List<MatchPlayer>matchPlayers){
-        this.matchPlayers =matchPlayers;
+    @Embeddable
+    @EqualsAndHashCode
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class RedTeamAve {
+        @Column
+        private float aveKill2;
+
+        @Column
+        private float aveAssist2;
+
+        @Column
+        private float aveDeath2;
+
+        @Column
+        private Integer aveGoldAttain2;
+
+        @Column
+        private Integer aveVisionScore2;
+
+        @Column
+        private Integer aveDealtToChamp2;
+
+        public RedTeamAve(AverageCalculator averageCalculator) {
+            this.aveKill2 = averageCalculator.getAveKills2();
+            this.aveAssist2 = averageCalculator.getAveAssist2();
+            this.aveDeath2 = averageCalculator.getAveDeath2();
+            this.aveGoldAttain2 = averageCalculator.getAveGoldEarn2();
+            this.aveVisionScore2 = averageCalculator.getAveVisionScore2();
+            this.aveDealtToChamp2 = averageCalculator.getAveDealt2();
+        }
+    }
+
+    public Match(MatchDto matchDto) {
+        this.matchId = matchDto.metadata().matchId();
+        this.gameMode = matchDto.info().gameMode();
+        this.gameStartTimestamp = matchDto.info().gameStartTimestamp();
+        this.gameEndTimeStamp = matchDto.info().gameEndTimestamp();
+        this.gameDuration = matchDto.info().gameDuration();
+    }
+
+    public Match setAveValueOfMatch(BlueTeamAve blue, RedTeamAve red) {
+        this.blueTeamAve = blue;
+        this.redTeamAve = red;
+
+        return this;
     }
 }

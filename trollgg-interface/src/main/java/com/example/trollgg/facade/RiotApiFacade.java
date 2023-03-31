@@ -1,13 +1,12 @@
 package com.example.trollgg.facade;
 
-import com.example.trollgg.dto.LeagueDto;
-import com.example.trollgg.dto.LeagueEntryDto;
-import com.example.trollgg.dto.ScoreDto.TrollScoreDto;
-import com.example.trollgg.dto.SummonerDto;
 import com.example.trollgg.dto.SummonerProfileDto;
-import com.example.trollgg.dto.match.MatchDto;
+import com.example.trollgg.dto.riotApi.LeagueDto;
+import com.example.trollgg.dto.riotApi.LeagueEntryDto;
+import com.example.trollgg.dto.riotApi.SummonerDto;
+import com.example.trollgg.dto.riotApi.match.MatchDto;
+import com.example.trollgg.dto.scoreDto.TrollScoreDto;
 import com.example.trollgg.entity.Summoner;
-import com.example.trollgg.error.ResourceNotFoundException;
 import com.example.trollgg.repository.SummonerRepository;
 import com.example.trollgg.service.DataDragonService;
 import com.example.trollgg.service.LeagueService;
@@ -16,7 +15,6 @@ import com.example.trollgg.service.SummonerService;
 import com.example.trollgg.util.NumberUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,7 +26,6 @@ public class RiotApiFacade {
 	private final LeagueService leagueService;
 	private final MatchService matchService;
 	private final DataDragonService dataDragonService;
-
 	private final SummonerRepository summonerRepository;
 
 	public SummonerDto getSummonerData(String summonerName) {
@@ -42,10 +39,10 @@ public class RiotApiFacade {
 
 	public List<MatchDto> getMatch(String summonerName) {
 		List<String> matchIdList = matchService.getMatchIdList(summonerService.getSummonerDataByName(summonerName).puuid());
-		return matchService.getMatchData(matchIdList);
+		return matchService.getMatchDatas(matchIdList);
 	}
 
-	public SummonerProfileDto getSummonerProfile(String summonerName) {
+	public SummonerProfileDto getSummonerInfo(String summonerName) {
 		//데이터없는 첫 조회시 데이터없는 소환사 데이터 생성
 		return summonerRepository.findBySummonerName(summonerName)
 				.map(SummonerProfileDto::new)
@@ -53,21 +50,6 @@ public class RiotApiFacade {
 					Summoner summoner = summonerService.firstEnroll(summonerName);
 					return new SummonerProfileDto(summoner);
 				});
-	}
-
-	@Transactional
-	public SummonerProfileDto resetData(long id) {
-
-		return summonerRepository.findById(id)
-				.map(summoner -> {
-					SummonerDto newData = summonerService.getSummonerDataById(summoner.getEncryptedId());
-					String profileUrl = dataDragonService.getProfileUrl(newData.profileIconId());
-					LeagueEntryDto leagueEntryDto = leagueService.getFistLeagueData(summoner.getEncryptedId());
-
-					summoner.resetData(newData, profileUrl, leagueEntryDto);
-					return new SummonerProfileDto(summoner);
-				})
-				.orElseThrow(() -> new ResourceNotFoundException("Summoner not found: " + id));
 	}
 
 	public Object getSummonerRankProfile(String summonerName) {
